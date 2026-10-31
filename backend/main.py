@@ -22,8 +22,6 @@ app.add_middleware(
 class TripRequest(BaseModel):
     destination: str = Field(min_length=1)
     days: int = Field(default=3, ge=1, le=14)
-    start_date: str | None = None
-    group_size: int = Field(default=1, ge=1, le=20)
     budget: Literal["Budget", "Mid-range", "Premium"] = "Mid-range"
     style: Literal["Relaxed", "Balanced", "Packed"] = "Balanced"
     interests: list[str] = Field(default_factory=list)
@@ -67,4 +65,4 @@ def create_itinerary(request: TripRequest):
                 {"time": "16:30", "title": places[(index + 1) % len(places)], "category": "Experience"},
             ],
         })
-    return {"destination": request.destination, "country": COUNTRIES.get(request.destination.title(), request.destination), "budget": request.budget, "style": request.style, "interests": request.interests, "start_date": request.start_date, "group_size": request.group_size, "itinerary": itinerary}
+    return {"destination": request.destination, "country": COUNTRIES.get(request.destination.title(), request.destination), "budget": request.budget, "style": request.style, "interests": request.interests, "itinerary": itinerary}
